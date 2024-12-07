@@ -82,6 +82,11 @@ def snake_game():
     """Página do jogo Snake"""
     return render_template('snake.html')
 
+@app.route('/tetris')
+def tetris_game():
+    """Página do jogo Tetris"""
+    return render_template('tetris.html')
+
 @app.route('/play/<game_id>', methods=['POST'])
 def play_game(game_id):
     """Inicia um jogo específico"""
@@ -108,30 +113,29 @@ def start_server():
         # Configurar logging
         logging.basicConfig(level=logging.INFO)
         logger = logging.getLogger('werkzeug')
-        logger.setLevel(logging.INFO)  # Mudando para INFO para ver mais detalhes
+        logger.setLevel(logging.INFO)
 
         # Esperar um pouco antes de abrir o navegador
         def open_browser():
-            time.sleep(2)  # Espera 2 segundos
+            time.sleep(1)  # Reduzido para 1 segundo
             webbrowser.open(f'http://127.0.0.1:{port}')
 
         # Iniciar o navegador em uma thread separada
         from threading import Timer
-        Timer(1.5, open_browser).start()
+        Timer(0.5, open_browser).start()
 
         print("\nServidor iniciado em:")
         print(f"- Local: http://127.0.0.1:{port}")
         print(f"- Rede Local: http://{local_ip}:{port}")
         print(f"- Nome Amigável: http://{hostname}.local:{port}")
         
-        # Iniciar servidor
-        app.run(host='127.0.0.1', port=port, debug=True, use_reloader=True)
+        # Iniciar servidor com reloader manual
+        app.run(host='127.0.0.1', port=port, debug=True, use_reloader=False)
 
     except Exception as e:
         print(f"\n❌ Erro ao iniciar o servidor: {e}")
         print("\nTentando iniciar em configuração alternativa...")
         try:
-            # Tentar iniciar com configuração mínima
             app.run(host='127.0.0.1', port=5000, debug=False)
         except Exception as e2:
             print(f"\n❌ Erro fatal ao iniciar o servidor: {e2}")
