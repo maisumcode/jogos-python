@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Jogos Python</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🎮 Plataforma de Jogos Python</h1>
+        <nav>
+            <button onclick="toggleTheme()">🌓 Tema</button>
+            <button onclick="showScores()">🏆 Ranking</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="games-grid">
+            {% for game in games %}
+            <div class="game-card">
+                <h2>{{ game.name }}</h2>
+                <p>{{ game.description }}</p>
+                <button onclick="playGame('{{ game.id }}')" class="play-button">Jogar</button>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>Desenvolvido com Python e XFX Academy ❤️</p>
+    </footer>
+
+    <script>
+        function playGame(gameId) {
+            console.log('%cIniciando jogo: ' + gameId, 'color: #e74c3c; font-weight: bold; font-size: 14px;');
+            
+            // Faz uma requisição para iniciar o jogo
+            fetch(`/play/${gameId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    console.error('%cErro ao iniciar o jogo', 'color: #e74c3c; font-weight: bold;');
+                    alert('Erro ao iniciar o jogo. Tente novamente.');
+                }
+            })
+            .catch(error => {
+                console.error('%cErro:', 'color: #e74c3c; font-weight: bold;', error);
+                alert('Erro ao iniciar o jogo. Tente novamente.');
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        function showScores() {
+            fetch('/api/scores')
+                .then(response => response.json())
+                .then(scores => {
+                    // TODO: Mostrar scores em um modal
+                    console.log('Scores:', scores);
+                });
+        }
+    </script>
+</body>
+</html> 
