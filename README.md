@@ -1,146 +1,188 @@
 # 🐍 Plataforma de Jogos Python
 
-- [x] Menu principal
-- [x] Sistema de pontuação individual
+Uma plataforma modular para jogos Python que combina a diversão dos jogos clássicos com uma arquitetura moderna e expansível.
+
+## 🎯 Características Principais
+
+### Sistema Base
+
+- [x] Menu principal interativo
+- [x] Sistema de pontuação global e individual
 - [x] Troca de tema claro/escuro
+- [x] Interface responsiva e moderna
+- [x] Sistema de plugins para novos jogos
+- [x] Gerenciamento de estados e saves
 
-### Servidor Flask
+### Servidor Web
 
-- [x] Servidor web integrado
-- [x] IP local com porta dinâmica
-- [x] Múltiplas formas de acesso:
-  - `http://localhost:PORTA` (acesso local)
-  - `http://SEU-IP:PORTA` (acesso pela rede)
-  - `http://SEU-COMPUTADOR.local:PORTA` (nome amigável)
-- [x] Compatibilidade com MacOS (evita conflitos com AirDrop)
-- [x] Gerenciamento automático de processos
-- [x] API REST para controle do jogo
+- [x] Backend Flask para multiplayer
+- [x] Sistema de ranking online
+- [x] API REST para integrações
+- [x] Múltiplos pontos de acesso:
+  - Local: `http://localhost:PORTA`
+  - Rede: `http://SEU-IP:PORTA`
+  - DNS Local: `http://SEU-COMPUTADOR.local:PORTA`
 
-#### Geral
+### Controles Universais
 
-- [x] Painel de Controle Visual
-- [x] Pause: P ou Espaço
-- [x] Menu: M ou ESC
-- [x] Tema: T
-- [x] Reiniciar: R
+- **Pause**: P ou Espaço
+- **Menu**: M ou ESC
+- **Tema**: T
+- **Reiniciar**: R
 
-### Interface do Usuário
+## 🎮 Jogos Disponíveis
 
-- [x] Menu Principal Interativo
-- [x] Painel de Controle
-  - Botão de Pausa
-  - Botão de Menu
-  - Botão de Tema
-  - Botão de Reinício
-- [x] Feedback Visual de Ações
-- [x] Temas Claro/Escuro (padrão: claro)
-- [x] Transições Suaves
+### 🐍 Snake
 
-### 🎮 Tela Inicial
+- Controles com setas direcionais
+- Modos de dificuldade
+- Power-ups especiais
+- Ranking local e online
 
-- Placar do jogador atual
-- Painel de controles centralizado mostrando:
-  - Controles de movimento
-  - Teclas de ação do jogo
-  - Atalhos do sistema
-- Botões de seleção de modo:
-  - Snack
-  - Tetris
-  - Outros
-- Interface limpa e minimalista
-- Tema claro ativado por padrão
+### 🟦 Tetris
 
-### 🎮 Tela do Snake Game
-
-- Interface minimalista com tema claro padrão
-- Elementos da interface:
-  - Título "Snake Game" com ícone 🐍
-  - Placar do Jogador
-- Características:
-  - Design responsivo
-  - Transições suaves
-  - Feedback visual das ações
-  - Área de jogo bem definida
-  - Sistema de pontuação integrado
-  - Modos de jogo flexíveis
-
-## 📁 Como Executar
-
-1. **Requisitos**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-   Para MacOS, instale também o XQuartz:
-
-   ```bash
-   brew install --cask xquartz
-   ```
-
-2. **Iniciando o Servidor**
-
-   ```bash
-   python main.py
-   ```
-
-3. **Acessando o Jogo**
-
-   O servidor mostrará três URLs diferentes para acesso:
-
-   - Local: `http://localhost:PORTA`
-   - Rede Local: `http://SEU-IP:PORTA`
-   - Nome Amigável: `http://SEU-COMPUTADOR.local:PORTA`
-
-4. **Telas de Jogo**
-
-   - site principal: Acesse a URL base (ex: `http://localhost:PORTA/`)
-   - snack: Adicione `/snack` à URL (ex: `http://localhost:PORTA/snack`)
-   - tetris: Adicione `/tetris` à URL (ex: `http://localhost:PORTA/tetris`)
+- Sistema de rotação intuitivo
+- Preview da próxima peça
+- Sistema de hold piece
+- Modos de jogo variados
 
 ## 📁 Estrutura do Projeto
 
-### Organização Modular
+```
+jogos-python/
+├── server/
+│   ├── app.py           # Servidor Flask
+│   ├── routes.py        # Rotas da API
+│   └── database.py      # Gerenciamento de dados
+├── core/
+│   ├── game_manager.py  # Gerenciador de jogos
+│   ├── state.py         # Gerenciamento de estado
+│   └── events.py        # Sistema de eventos
+├── ui/
+│   ├── menu.py          # Menu principal
+│   ├── theme.py         # Sistema de temas
+│   └── components/      # Componentes reutilizáveis
+├── games/
+│   ├── base.py          # Classe base para jogos
+│   ├── snake/
+│   │   ├── main.py
+│   │   └── assets/
+│   └── tetris/
+│       ├── main.py
+│       ├── blocks.py
+│       └── assets/
+└── utils/
+    ├── config.py        # Configurações
+    └── helpers.py       # Funções auxiliares
+```
 
-### Responsabilidades dos Módulos
+## 🚀 Como Executar
 
-#### 🎯 Core
+### 1. Requisitos do Sistema
 
-#### 🖼️ UI
+- Python 3.8 ou superior
+- pip (gerenciador de pacotes Python)
+- Para MacOS: XQuartz (opcional)
 
-- **Renderer** (`renderer.py`):
+### 2. Instalação
 
-  - Renderização gráfica
-  - Interface do usuário
-  - Textos e mensagens
-  - Efeitos visuais
+```bash
+# Clone o repositório
+git clone https://github.com/maisumcode/jogos-python.git
 
-- **Menu** (`menu.py`):
+# Instale as dependências
+pip install -r requirements.txt
 
-  - Menu principal
-  - Seleção entre telas de jogo
-  - Navegação interativa
+# Para MacOS (opcional)
+brew install --cask xquartz
+```
 
-- **Components**:
+### 3. Iniciando a Plataforma
 
-  - **Button** (`button.py`):
+#### Modo Servidor (Recomendado)
 
-    - Botões interativos
-    - Feedback visual
-    - Sistema de atalhos
+```bash
+# Inicia o servidor Flask com interface web
+python server/app.py
+```
 
-  - **ControlPanel** (`control_panel.py`):
-    - Painel de controle do jogo
-    - Organização de botões
-    - Feedback de estado
+O servidor irá:
 
-#### 🌐 Server (`routes.py`)
+- Encontrar uma porta livre automaticamente
+- Mostrar as URLs de acesso:
+  - Local: `http://localhost:PORTA`
+  - Rede Local: `http://SEU-IP:PORTA`
+  - Nome Amigável: `http://SEU-COMPUTADOR.local:PORTA`
+- Abrir o navegador automaticamente
 
-- Rotas do servidor Flask
-- Gerenciamento de processos
-- URLs amigáveis
-- API REST
+#### Recarregamento de Alterações
 
-## 🎮 Versão
+O servidor possui duas formas de recarregar alterações feitas no código:
 
-Versão atual: 0.0.1
+1. **Recarregamento Automático** (Ativado por padrão)
+
+   - O servidor detecta alterações nos arquivos
+   - Recarrega automaticamente quando você salva um arquivo
+   - Útil durante o desenvolvimento
+   - Algumas alterações podem requerer reinício manual
+
+2. **Reinício Manual** (Se necessário)
+   - Pare o servidor atual (Ctrl+C)
+   - Inicie novamente com:
+   ```bash
+   python server/app.py
+   ```
+
+#### Modo Offline (Jogos Individuais)
+
+```bash
+# Para jogar Snake
+python games/snake/main.py
+
+# Para jogar Tetris
+python games/tetris/main.py
+```
+
+## 🔧 Desenvolvimento
+
+### Adicionando Novos Jogos
+
+1. Crie uma nova pasta em `games/`
+2. Implemente a classe base `GamePlugin`
+3. Adicione assets e configurações
+4. Registre o jogo no `game_manager.py`
+
+```python
+from core.base import GamePlugin
+
+class NewGame(GamePlugin):
+    def __init__(self):
+        super().__init__(
+            name="Novo Jogo",
+            version="1.0.0",
+            author="Seu Nome"
+        )
+```
+
+### API REST
+
+- `GET /api/games` - Lista jogos disponíveis
+- `GET /api/scores` - Ranking global
+- `POST /api/scores` - Registra nova pontuação
+- `GET /api/players` - Lista jogadores online
+
+## 📈 Versão
+
+Versão atual: 1.0.0
+
+## 🤝 Contribuindo
+
+1. Fork o projeto
+2. Crie sua branch (`git checkout -b feature/NovoJogo`)
+3. Commit suas mudanças (`git commit -m 'Adiciona novo jogo'`)
+4. Push para a branch (`git push origin feature/NovoJogo`)
+5. Abra um Pull Request
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
