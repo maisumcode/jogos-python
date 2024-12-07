@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, send_from_directory
+from flask import Flask, render_template, jsonify, send_from_directory, request
 import socket
 import webbrowser
 from contextlib import closing
@@ -103,14 +103,33 @@ def list_games():
     ]
     return jsonify(games)
 
-@app.route('/api/scores')
-def get_scores():
-    """Retorna o ranking global"""
-    scores = [
-        {"player": "Player1", "game": "snake", "score": 100},
-        {"player": "Player2", "game": "tetris", "score": 1000}
-    ]
-    return jsonify(scores)
+# Lista temporária de scores (em produção seria um banco de dados)
+scores_list = []
+
+@app.route('/ranking')
+def ranking_page():
+    """Página de ranking"""
+    return render_template('ranking.html')
+
+@app.route('/api/scores', methods=['GET', 'POST'])
+def handle_scores():
+    """Gerencia as pontuações"""
+    global scores_list
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        scores_list.append({
+            'player': data['player'],
+            'game': data['game'],
+            'score': data['score']
+        })
+        # Ordena por pontuação (maior primeiro)
+        scores_list.sort(key=lambda x: x['score'], reverse=True)
+        # Mantém apenas os top 10
+        scores_list = scores_list[:10]
+        return jsonify(scores_list)
+    
+    return jsonify(scores_list)
 
 def start_server():
     """Inicia o servidor com porta dinâmica e abre o navegador"""
